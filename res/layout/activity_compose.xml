@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ComposeActivity" >
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tweet"
+        android:id="@id/btnCompose"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:onClick="onTweet" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:id="@id/btnCancel"
+        android:onClick="onCancel"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@id/etTweet"
+        android:hint="Type your tweet here"
+        android:onClick="onTweet"
+        android:gravity="top"
+        android:layout_marginTop="36dp"
+        android:layout_below="@id/btnCompose"
+        android:layout_alignRight="@id/btnCompose" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@id/ivComposeProfile"
+        android:layout_below="@id/btnCancel"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tvUsername"
+        android:layout_below="@id/btnCancel"
+        android:layout_toRightOf="@id/btnCancel"
+        android:layout_alignRight="@id/btnCompose" />
+
+</RelativeLayout>

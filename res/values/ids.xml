@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><item name="btnCompose" type="id">btnCompose</item><item name="btnCancel" type="id">btnCancel</item><item name="etTweet" type="id">etTweet</item><item name="tvComposeName" type="id">tvComposeName</item><item name="ivComposeProfile" type="id">ivComposeProfile</item></resources>
