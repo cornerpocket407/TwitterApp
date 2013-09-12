@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
@@ -36,13 +37,22 @@ public class TimelineActivity extends Activity {
 	}
 
 	private void getUser() {
-		TwitterApp.getRestClient().getUserInfo(new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(JSONObject jsonObject) {
-				user = User.fromJson(jsonObject);
+		if (isNetworkAvailable()) {
+			TwitterApp.getRestClient().getUserInfo(
+					new JsonHttpResponseHandler() {
+						@Override
+						public void onSuccess(JSONObject jsonObject) {
+							user = User.fromJson(jsonObject);
+							setTitle("@" + user.getName());
+						}
+					});
+		} else {
+			User dbUser = new Select().from(User.class).executeSingle();
+			if (dbUser != null) {
+				user = dbUser;
 				setTitle("@" + user.getName());
 			}
-		});
+		}
 	}
 
 	private boolean isNetworkAvailable() {
@@ -93,7 +103,8 @@ public class TimelineActivity extends Activity {
 						}
 					});
 		} else {
-			tweets = new Select().from(Tweet.class).execute();
+			tweets = new Select().from(Tweet.class).orderBy("id").limit("25")
+					.execute();
 			populateTweetsAdapter();
 		}
 	}
@@ -119,13 +130,13 @@ public class TimelineActivity extends Activity {
 	}
 
 	public void onComposeTweet(MenuItem item) {
-
-		Intent intent = new Intent(this, ComposeActivity.class);
-		startActivityForResult(intent, REQUEST_CODE);
-		// switch (item.getItemId()) {
-		// case R.id.miCompose:
-		// default:
-		// return super.onOptionsItemSelected(item);
-		// }
+		if (isNetworkAvailable()) {
+			Intent intent = new Intent(this, ComposeActivity.class);
+			startActivityForResult(intent, REQUEST_CODE);
+		} else {
+			Toast.makeText(getBaseContext(),
+					"Please connect to a network connection before composing",
+					Toast.LENGTH_LONG).show();
+		}
 	}
 }
