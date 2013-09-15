@@ -49,6 +49,10 @@ public class User extends Model {
     public String getScreenName() {
         return screenName;
     }
+    
+    public String getTagline() {
+    	 return ModelHelper.getString(jsonObject, "description");
+    }
 
     public String getProfileImageUrl() {
         return profileImageUrl;

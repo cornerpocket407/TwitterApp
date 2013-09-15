@@ -36,18 +36,18 @@
         android:layout_alignRight="@id/btnCompose" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@id/ivComposeProfile"
-        android:layout_below="@id/btnCancel"
-        android:layout_alignParentLeft="true" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/tvUsername" />
 
     <TextView
+        android:id="@+id/tvUsername"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/tvUsername"
-        android:layout_below="@id/btnCancel"
-        android:layout_toRightOf="@id/btnCancel"
-        android:layout_alignRight="@id/btnCompose" />
+        android:layout_below="@id/btnCompose"
+        android:layout_toRightOf="@id/ivComposeProfile" />
 
 </RelativeLayout>
