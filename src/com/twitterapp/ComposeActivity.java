@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,7 +21,7 @@ import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.twitterapp.models.User;
 
-public class ComposeActivity extends Activity {
+public class ComposeActivity extends FragmentActivity {
 
 	private EditText etTweet;
 	private TextView tvUserName;
@@ -30,18 +31,18 @@ public class ComposeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_compose);
 		etTweet = (EditText) findViewById(R.id.etTweet);
-		getUser();
+//		getUser();
 	}
-
-	private void getUser() {
-		SharedPreferences pref =  PreferenceManager.getDefaultSharedPreferences(this);
-		String screenName = pref.getString("screenName", "");
-		String profileImageUrl = pref.getString("profileImage", "");
-		tvUserName = (TextView) findViewById(R.id.tvUsername);
-		tvUserName.setText(screenName);
-		ImageView imageView = (ImageView) findViewById(R.id.ivComposeProfile);
-		ImageLoader.getInstance().displayImage(profileImageUrl, imageView);
-	}
+//
+//	private void getUser() {
+//		SharedPreferences pref =  PreferenceManager.getDefaultSharedPreferences(this);
+//		String screenName = pref.getString("screenName", "");
+//		String profileImageUrl = pref.getString("profileImage", "");
+//		tvUserName = (TextView) findViewById(R.id.tvUsername);
+//		tvUserName.setText(screenName);
+//		ImageView imageView = (ImageView) findViewById(R.id.ivComposeProfile);
+//		ImageLoader.getInstance().displayImage(profileImageUrl, imageView);
+//	}
 
 	public void onTweet(View view) {
 		String tweet = etTweet.getText().toString();

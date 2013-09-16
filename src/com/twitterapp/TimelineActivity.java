@@ -73,17 +73,6 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 
 	}
 
-	private void saveUserToSharedPreferences(User user) {
-		if (user != null) {
-			SharedPreferences pref = PreferenceManager
-					.getDefaultSharedPreferences(this);
-			Editor edit = pref.edit();
-			edit.putString("screenName", user.getScreenName());
-			edit.putString("profileImage", user.getProfileImageUrl());
-			edit.commit();
-		}
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {

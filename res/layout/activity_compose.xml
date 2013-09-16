@@ -23,31 +23,26 @@
         android:layout_alignParentLeft="true" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:inputType="textMultiLine"
-        android:ems="10"
         android:id="@id/etTweet"
-        android:hint="Type your tweet here"
-        android:onClick="onTweet"
-        android:gravity="top"
-        android:layout_marginTop="36dp"
-        android:layout_below="@id/btnCompose"
-        android:layout_alignRight="@id/btnCompose" />
-
-    <ImageView
-        android:id="@id/ivComposeProfile"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/tvUsername" />
-
-    <TextView
-        android:id="@+id/tvUsername"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/btnCompose"
-        android:layout_toRightOf="@id/ivComposeProfile" />
+        android:layout_alignRight="@id/btnCompose"
+        android:layout_below="@+id/ftScreenName"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="Type your tweet here"
+        android:inputType="textMultiLine"
+        android:onClick="onTweet" />
+
+    <fragment
+        android:id="@+id/ftScreenName"
+        android:name="com.twitterapp.fragments.ScreenNameFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/btnCancel"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="18dp"
+        tools:layout="@layout/fragment_screen_name" />
 
 </RelativeLayout>
