@@ -13,7 +13,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.twitterapp.models.User;
 
-public class ProfileActivity extends FragmentActivity implements ScreenNameProvider {
+public class ProfileActivity extends FragmentActivity {
 
 	private String screenName;
 
@@ -23,7 +23,6 @@ public class ProfileActivity extends FragmentActivity implements ScreenNameProvi
 		setContentView(R.layout.activity_profile);
 		setScreenName(getIntent().getStringExtra("screen_name"));
 		loadUserlistFragment();
-
 		getUser();
 	}
 

@@ -40,18 +40,9 @@
             android:layout_below="@+id/tvName"
             android:text="Tagline"
             android:textSize="12sp" />
+        
     </RelativeLayout>
 
-    <fragment
-        android:id="@+id/fragmentUserTimeline"
-        android:name="com.twitterapp.UserTimelineFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/llCounts"
-        tools:layout="@layout/fragments_tweets_list" />
-    
-    
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="wrap_content"
@@ -59,7 +50,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" >
+        android:layout_below="@+id/llCounts" >
 
     </FrameLayout>
 
@@ -77,14 +68,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3 Followers" />
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvFollowing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rlHeader"
-        android:layout_centerHorizontal="true"
-        android:text="5 Following" />
+        <TextView
+            android:id="@+id/tvFollowing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:text="5 Following" />
+
+    </LinearLayout>
 
 </RelativeLayout>

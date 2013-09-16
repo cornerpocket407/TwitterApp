@@ -36,14 +36,12 @@ import com.twitterapp.models.User;
 public class TimelineActivity extends FragmentActivity implements TabListener {
 
 	private int REQUEST_CODE = 1;
-
 	private User user;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
-		// loadTweets();
 		getUser();
 		setupNavigation();
 	}
@@ -56,7 +54,6 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 				user = User.fromJson(arg1);
 			}
 		});
-		// saveUserToSharedPreferences(user);
 	}
 
 	private void setupNavigation() {

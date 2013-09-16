@@ -22,19 +22,11 @@ public class UserTimelineFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-//		this.screenName = getArguments().getString("screen_name");
+		this.screenName = getArguments().getString("screen_name");
 		return inflater.inflate(R.layout.fragments_tweets_list, container,
 				false);
 	}
-	
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		if (activity instanceof ScreenNameProvider) {
-			screenName = ((ScreenNameProvider)getActivity()).getScreenName();
-		}
-	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
