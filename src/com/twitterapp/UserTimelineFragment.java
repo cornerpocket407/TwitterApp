@@ -9,6 +9,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.twitterapp.fragments.BaseFragment;
 import com.twitterapp.models.Tweet;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +17,22 @@ import android.view.ViewGroup;
 
 public class UserTimelineFragment extends BaseFragment {
 	private Collection<? extends Tweet> tweets;
+	private String screenName;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+//		this.screenName = getArguments().getString("screen_name");
 		return inflater.inflate(R.layout.fragments_tweets_list, container,
 				false);
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof ScreenNameProvider) {
+			screenName = ((ScreenNameProvider)getActivity()).getScreenName();
+		}
 	}
 	
 	@Override
@@ -32,7 +43,7 @@ public class UserTimelineFragment extends BaseFragment {
 
 	@Override
 	public void loadFromApi() {
-		TwitterApp.getRestClient().getUserTimeline(
+		TwitterApp.getRestClient().getUserTimeline(screenName,
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
@@ -40,7 +51,6 @@ public class UserTimelineFragment extends BaseFragment {
 						getAdapter().addAll(Tweet.fromJson(jsonTweets));
 					}
 				});
-
 	}
 
 	@Override

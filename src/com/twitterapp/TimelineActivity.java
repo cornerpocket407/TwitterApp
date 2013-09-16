@@ -44,7 +44,19 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
 		// loadTweets();
+		getUser();
 		setupNavigation();
+	}
+
+	private void getUser() {
+		TwitterApp.getRestClient().getCurrentUser(new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int arg0, JSONObject arg1) {
+				super.onSuccess(arg0, arg1);
+				user = User.fromJson(arg1);
+			}
+		});
+		// saveUserToSharedPreferences(user);
 	}
 
 	private void setupNavigation() {
@@ -111,6 +123,7 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 
 	public void onProfileView(MenuItem mi) {
 		Intent intent = new Intent(this, ProfileActivity.class);
+		intent.putExtra("screen_name", user.getScreenName());
 		startActivity(intent);
 	}
 

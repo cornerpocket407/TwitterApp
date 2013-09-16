@@ -42,9 +42,15 @@ public class TwitterClient extends OAuthBaseClient {
         client.post(url, params, handler);
     }
 
-    public void getUserInfo(AsyncHttpResponseHandler handler) {
+    public void getCurrentUser(AsyncHttpResponseHandler handler) {
+       getCurrentUser("", handler);
+    }
+    
+    public void getCurrentUser(String screenName, AsyncHttpResponseHandler handler) {
         String url = getApiUrl("account/verify_credentials.json");
-        client.get(url, null, handler);
+        RequestParams params = new RequestParams();
+        params.put("screen_name", screenName);
+        client.get(url, params, handler);
     }
     
     public void getMentions(AsyncHttpResponseHandler handler) {
@@ -52,9 +58,18 @@ public class TwitterClient extends OAuthBaseClient {
         client.get(url, null, handler);
     }
     
-    public void getUserTimeline(AsyncHttpResponseHandler handler) {
+    public void getUser(String screenName, AsyncHttpResponseHandler handler) {
+        String url = getApiUrl("users/lookup.json");
+        RequestParams params = new RequestParams();
+        params.put("screen_name", screenName);
+        client.get(url, params, handler);
+    }
+    
+    public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) {
         String url = getApiUrl("statuses/user_timeline.json");
-        client.get(url, null, handler);
+        RequestParams params = new RequestParams();
+        params.put("screen_name", screenName);
+        client.get(url, params, handler);
     }
     
     // CHANGE THIS
