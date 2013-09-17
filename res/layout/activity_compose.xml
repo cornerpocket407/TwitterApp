@@ -22,27 +22,25 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true" />
 
+    <FrameLayout
+        android:id="@+id/flScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/btnCancel"
+        android:layout_marginTop="50dp" >
+    </FrameLayout>
+
     <EditText
         android:id="@id/etTweet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignRight="@id/btnCompose"
-        android:layout_below="@+id/ftScreenName"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/flScreenName"
         android:ems="10"
         android:gravity="top"
         android:hint="Type your tweet here"
         android:inputType="textMultiLine"
         android:onClick="onTweet" />
-
-    <fragment
-        android:id="@+id/ftScreenName"
-        android:name="com.twitterapp.fragment.ScreenNameFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/btnCancel"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="18dp"
-        tools:layout="@layout/fragment_screen_name" />
 
 </RelativeLayout>

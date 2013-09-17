@@ -23,15 +23,6 @@ import android.view.ViewGroup;
 
 public class HomeTimelineFragment extends BaseFragment {
 
-	private ArrayList<Tweet> tweets = new ArrayList<Tweet>();
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragments_tweets_list, container,
-				false);
-	}
-
 	@Override
 	public void loadFromApi() {
 		TwitterApp.getRestClient().getHomeTimeline(
@@ -39,9 +30,10 @@ public class HomeTimelineFragment extends BaseFragment {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
 						super.onSuccess(jsonTweets);
-						tweets = Tweet.fromJson(jsonTweets);
-						doStuff();
-						// saveToLocalDb();
+						getAdapter().clear();
+						getAdapter().addAll(Tweet.fromJson(jsonTweets));
+						//doStuff();
+						// saveToLocalDb(); 
 					}
 					
 					@Override
@@ -88,14 +80,9 @@ public class HomeTimelineFragment extends BaseFragment {
 				.execute();
 	}
 
-	@Override
-	public void doStuff() {
-		getAdapter().addAll(tweets);
-	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 	}
 }

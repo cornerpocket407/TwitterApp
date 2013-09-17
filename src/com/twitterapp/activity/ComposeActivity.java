@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,6 +24,8 @@ import com.twitterapp.R;
 import com.twitterapp.TwitterApp;
 import com.twitterapp.R.id;
 import com.twitterapp.R.layout;
+import com.twitterapp.fragment.ScreenNameFragment;
+import com.twitterapp.model.TwitterAppConsts;
 import com.twitterapp.model.User;
 
 public class ComposeActivity extends FragmentActivity {
@@ -35,17 +38,43 @@ public class ComposeActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_compose);
 		etTweet = (EditText) findViewById(R.id.etTweet);
-//		getUser();
+		loadScreenNameFragment();
 	}
-//
+	
+	private void loadScreenNameFragment() {
+		SharedPreferences pref =  getSharedPreferences(TwitterAppConsts.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+		String screenName = pref.getString("screen_name", "");
+		if (screenName.isEmpty()) {
+			throw new RuntimeException("screen name shoudln't be blank in comopse activity");
+		}
+		FragmentManager manager = getSupportFragmentManager();
+		android.support.v4.app.FragmentTransaction transaction = manager
+				.beginTransaction();
+		Bundle bundle = new Bundle();
+		bundle.putString("screen_name", screenName);
+		ScreenNameFragment screenNameFragment = new ScreenNameFragment();
+		screenNameFragment.setArguments(bundle);
+		transaction.replace(R.id.flScreenName, screenNameFragment);
+		transaction.commit();
+	}
+
 //	private void getUser() {
-//		SharedPreferences pref =  PreferenceManager.getDefaultSharedPreferences(this);
-//		String screenName = pref.getString("screenName", "");
-//		String profileImageUrl = pref.getString("profileImage", "");
-//		tvUserName = (TextView) findViewById(R.id.tvUsername);
-//		tvUserName.setText(screenName);
-//		ImageView imageView = (ImageView) findViewById(R.id.ivComposeProfile);
-//		ImageLoader.getInstance().displayImage(profileImageUrl, imageView);
+//		TwitterApp.getRestClient().getCurrentUser(new JsonHttpResponseHandler() {
+//			@Override
+//			public void onSuccess(JSONObject arg1) {
+//				User user = User.fromJson(arg1);
+//				ScreenNameFragment screenNameFragment = 
+//						(ScreenNameFragment) getSupportFragmentManager().findFragmentById(R.id.ftScreenName);
+//				screenNameFragment.setUser(user);
+//			}
+//		});
+////		SharedPreferences pref =  PreferenceManager.getDefaultSharedPreferences(this);
+////		String screenName = pref.getString("screenName", "");
+////		String profileImageUrl = pref.getString("profileImage", "");
+////		tvUserName = (TextView) findViewById(R.id.tvUsername);
+////		tvUserName.setText(screenName);
+////		ImageView imageView = (ImageView) findViewById(R.id.ivComposeProfile);
+////		ImageLoader.getInstance().displayImage(profileImageUrl, imageView);
 //	}
 
 	public void onTweet(View view) {

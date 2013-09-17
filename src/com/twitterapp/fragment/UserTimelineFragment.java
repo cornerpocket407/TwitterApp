@@ -19,19 +19,11 @@ import com.twitterapp.model.User;
 public class UserTimelineFragment extends BaseFragment {
 	private Collection<? extends Tweet> tweets;
 	private String screenName;
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		this.screenName = getArguments().getString("screen_name");
-		return inflater.inflate(R.layout.fragments_tweets_list, container,
-				false);
-	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onActivityCreated(savedInstanceState);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.screenName = getArguments().getString("screen_name");
 	}
 
 	@Override
@@ -41,6 +33,7 @@ public class UserTimelineFragment extends BaseFragment {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
 						super.onSuccess(jsonTweets);
+						getAdapter().clear();
 						getAdapter().addAll(Tweet.fromJson(jsonTweets));
 					}
 				});
@@ -54,8 +47,4 @@ public class UserTimelineFragment extends BaseFragment {
 
 	}
 
-	@Override
-	public void doStuff() {
-		getAdapter().addAll(tweets);
-	}
 }

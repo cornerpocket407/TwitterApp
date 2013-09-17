@@ -29,13 +29,15 @@ import com.twitterapp.model.User;
 
 public class ScreenNameFragment extends Fragment {
 
-	private SharedPreferences pref;
+	private String screenName;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-	return inflater.inflate(R.layout.fragment_screen_name, container, false);
-}
+		this.screenName = getArguments().getString("screen_name");
+		return inflater
+				.inflate(R.layout.fragment_screen_name, container, false);
+	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -44,66 +46,51 @@ public class ScreenNameFragment extends Fragment {
 		fetchUser();
 	}
 
-	private void populateFields() {
+	private void populateFields(User user) {
 		TextView tvName = (TextView) getActivity().findViewById(R.id.tvName);
-		tvName.setText(pref.getString("screenName", ""));
-		ImageView imageView = (ImageView) getActivity().findViewById(R.id.ivProfileImg);
-		ImageLoader.getInstance().displayImage(pref.getString("profileImage",""), imageView);
-		
-		TextView tvFollowers = (TextView) getActivity().findViewById(R.id.tvFollowers);
-		tvFollowers.setText(pref.getInt("followers", 0) + "Followers");
-		TextView tvFollowing = (TextView) getActivity().findViewById(R.id.tvFollowing);
-		tvFollowing.setText(pref.getInt("following", 0) + "Following");
-		
-		if(!(getActivity() instanceof ProfileActivity)) {
+		tvName.setText(user.getScreenName());
+		ImageView imageView = (ImageView) getActivity().findViewById(
+				R.id.ivProfileImg);
+		ImageLoader.getInstance().displayImage(
+				user.getProfileImageUrl(), imageView);
+
+		TextView tvFollowers = (TextView) getActivity().findViewById(
+				R.id.tvFollowers);
+		tvFollowers.setText(user.getFollowersCount() + "Followers");
+		TextView tvFollowing = (TextView) getActivity().findViewById(
+				R.id.tvFollowing);
+		tvFollowing.setText(user.getFriendsCount() + "Following");
+
+		if (!(getActivity() instanceof ProfileActivity)) {
 			tvFollowers.setVisibility(View.GONE);
 			tvFollowing.setVisibility(View.GONE);
 		}
 	}
-	
+
 	private void fetchUser() {
-		pref =  getActivity().getSharedPreferences(TwitterAppConsts.SHARED_PREFERENCE_NAME, Activity.MODE_PRIVATE);
-		String screenName = pref.getString("screenName", "");
-		String profileImageUrl = pref.getString("profileImage", "");
-		int followers = pref.getInt("followers", -1);
-		int following = pref.getInt("following", -1);
-		if (screenName.isEmpty() || profileImageUrl.isEmpty() || followers < 0 || following < 0) {
-			if (isNetworkAvailable()) {
-				TwitterApp.getRestClient().getCurrentUser(new JsonHttpResponseHandler() {
-					@Override
-					public void onSuccess(int arg0, JSONObject arg1) {
-						super.onSuccess(arg0, arg1);
-						User user = User.fromJson(arg1);
-						saveToSharedPreferences(user);
-						populateFields();
-					}
-				});
-			} else {
-				User user = new Select().from(User.class).executeSingle();
-				saveToSharedPreferences(user);
-				populateFields();
-			}
+		if (isNetworkAvailable()) {
+			TwitterApp.getRestClient().getUser(screenName,
+					new JsonHttpResponseHandler() {
+						@Override
+						public void onSuccess(int arg0, JSONObject arg1) {
+							super.onSuccess(arg0, arg1);
+							User user = User.fromJson(arg1);
+							populateFields(user);
+						}
+					});
 		} else {
-			populateFields();
+			User user = new Select().from(User.class).executeSingle();
+			populateFields(user);
 		}
 	}
-	
-	private void saveToSharedPreferences(User user) {
-		Editor editor = pref.edit();
-		editor.putString("screenName", user.getScreenName());
-		editor.putString("profileImage", user.getProfileImageUrl());
-		editor.putInt("followers", user.getFollowersCount());
-		editor.putInt("following", user.getFriendsCount());
-		editor.commit();
-	}
-	
+
 	private boolean isNetworkAvailable() {
-		ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager cm = (ConnectivityManager) getActivity()
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
 		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
 			return true;
 		}
 		return false;
 	}
-
 }

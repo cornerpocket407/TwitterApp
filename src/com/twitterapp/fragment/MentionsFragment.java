@@ -33,8 +33,8 @@ public class MentionsFragment extends BaseFragment {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
 						super.onSuccess(jsonTweets);
-						tweets = Tweet.fromJson(jsonTweets);
-						doStuff();
+						getAdapter().clear();
+						getAdapter().addAll(Tweet.fromJson(jsonTweets));
 					}
 				});
 		
@@ -48,8 +48,4 @@ public class MentionsFragment extends BaseFragment {
 		
 	}
 
-	@Override
-	public void doStuff() {
-		getAdapter().addAll(tweets);
-	}
 }

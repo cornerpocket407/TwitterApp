@@ -8,6 +8,8 @@ import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,19 +22,17 @@ import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.twitterapp.R;
 import com.twitterapp.TwitterApp;
-import com.twitterapp.R.drawable;
-import com.twitterapp.R.id;
-import com.twitterapp.R.layout;
-import com.twitterapp.R.menu;
 import com.twitterapp.fragment.HomeTimelineFragment;
 import com.twitterapp.fragment.MentionsFragment;
+import com.twitterapp.model.TwitterAppConsts;
 import com.twitterapp.model.User;
 
 public class TimelineActivity extends FragmentActivity implements TabListener {
 
 	private int REQUEST_CODE = 1;
 	private User user;
-
+	private HomeTimelineFragment homelineFragment;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,8 +47,17 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 			public void onSuccess(int arg0, JSONObject arg1) {
 				super.onSuccess(arg0, arg1);
 				user = User.fromJson(arg1);
+				saveToSharedPreferences();
 			}
 		});
+	}
+
+	protected void saveToSharedPreferences() {
+		SharedPreferences pref = getSharedPreferences(TwitterAppConsts.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
+		Editor edit = pref.edit();
+		edit.putString("screen_name", user.getScreenName());
+		edit.commit();
+		
 	}
 
 	private void setupNavigation() {
@@ -70,7 +79,7 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-			getActionBar().getTabAt(0).select();
+			homelineFragment.loadFromApi();
 		}
 	}
 
@@ -113,8 +122,9 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 		android.support.v4.app.FragmentTransaction transaction = manager
 				.beginTransaction();
 		if (tag.getTag().equals("HomeTimelineFragment")) {
+			homelineFragment = new HomeTimelineFragment();
 			transaction.replace(R.id.frame_container,
-					new HomeTimelineFragment());
+					homelineFragment);
 		} else {
 			transaction.replace(R.id.frame_container, new MentionsFragment());
 		}
@@ -130,6 +140,5 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 	@Override
 	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
-
 	}
 }
