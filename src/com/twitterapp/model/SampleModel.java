@@ -1,4 +1,4 @@
-package com.twitterapp.models;
+package com.twitterapp.model;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.twitterapp.models;
+package com.twitterapp.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;

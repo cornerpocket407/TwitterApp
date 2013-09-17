@@ -8,41 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ProfileActivity" >
 
-    <RelativeLayout
-        android:id="@+id/rlHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/fragmentUserTimeline"
-        android:layout_alignParentTop="true" >
-
-        <ImageView
-            android:id="@+id/ivProfileImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="10dp"
-            android:src="@android:drawable/screen_background_light_transparent" />
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/ivProfileImage"
-            android:text="Name"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tvTagline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tvName"
-            android:layout_below="@+id/tvName"
-            android:text="Tagline"
-            android:textSize="12sp" />
-        
-    </RelativeLayout>
-
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="wrap_content"
@@ -50,32 +15,17 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/llCounts" >
+        android:layout_below="@+id/ftScreenName" >
 
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/llCounts"
+    <fragment
+        android:id="@+id/ftScreenName"
+        android:name="com.twitterapp.fragment.ScreenNameFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/rlHeader"
-        android:layout_below="@+id/rlHeader"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/tvFollowers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3 Followers" />
-
-        <TextView
-            android:id="@+id/tvFollowing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:text="5 Following" />
-
-    </LinearLayout>
+        android:layout_alignLeft="@+id/frame_container"
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/fragment_screen_name" />
 
 </RelativeLayout>

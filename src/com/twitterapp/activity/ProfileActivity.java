@@ -1,4 +1,4 @@
-package com.twitterapp;
+package com.twitterapp.activity;
 
 import org.json.JSONObject;
 
@@ -11,7 +11,13 @@ import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.twitterapp.models.User;
+import com.twitterapp.R;
+import com.twitterapp.TwitterApp;
+import com.twitterapp.R.id;
+import com.twitterapp.R.layout;
+import com.twitterapp.R.menu;
+import com.twitterapp.fragment.UserTimelineFragment;
+import com.twitterapp.model.User;
 
 public class ProfileActivity extends FragmentActivity {
 
@@ -36,7 +42,6 @@ public class ProfileActivity extends FragmentActivity {
 		userTimelineFragment.setArguments(bundle);
 		transaction.replace(R.id.frame_container, userTimelineFragment);
 		transaction.commit();
-
 	}
 
 	@Override
@@ -54,24 +59,24 @@ public class ProfileActivity extends FragmentActivity {
 						super.onSuccess(arg0, arg1);
 						User user = User.fromJson(arg1);
 						getActionBar().setTitle("@" + user.getName());
-						populateProfileHeader(user);
+//						populateProfileHeader(user);
 					}
 				});
 		// saveUserToSharedPreferences(user);
 	}
 
-	protected void populateProfileHeader(User user) {
-		TextView tvName = (TextView) findViewById(R.id.tvName);
-		tvName.setText(user.getName());
-		TextView tvTagline = (TextView) findViewById(R.id.tvTagline);
-		tvTagline.setText(user.getTagline());
-		TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
-		tvFollowers.setText(user.getFollowersCount() + "Followers");
-		TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
-		tvFollowing.setText(user.getFollowersCount() + "Following");
-		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(),
-				(ImageView) findViewById(R.id.ivProfileImage));
-	}
+//	protected void populateProfileHeader(User user) {
+//		TextView tvName = (TextView) findViewById(R.id.tvName);
+//		tvName.setText(user.getName());
+//		TextView tvTagline = (TextView) findViewById(R.id.tvTagline);
+//		tvTagline.setText(user.getTagline());
+//		TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
+//		tvFollowers.setText(user.getFollowersCount() + "Followers");
+//		TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
+//		tvFollowing.setText(user.getFollowersCount() + "Following");
+//		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(),
+//				(ImageView) findViewById(R.id.ivProfileImage));
+//	}
 
 	public String getScreenName() {
 		return screenName;

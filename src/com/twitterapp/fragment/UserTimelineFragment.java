@@ -1,24 +1,25 @@
-package com.twitterapp;
+package com.twitterapp.fragment;
 
 import java.util.Collection;
 
 import org.json.JSONArray;
 
-import com.activeandroid.query.Select;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.twitterapp.fragments.BaseFragment;
-import com.twitterapp.models.Tweet;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.activeandroid.query.Select;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.twitterapp.R;
+import com.twitterapp.TwitterApp;
+import com.twitterapp.model.Tweet;
+import com.twitterapp.model.User;
+
 public class UserTimelineFragment extends BaseFragment {
 	private Collection<? extends Tweet> tweets;
 	private String screenName;
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

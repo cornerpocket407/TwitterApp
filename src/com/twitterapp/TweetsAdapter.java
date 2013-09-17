@@ -15,7 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.twitterapp.models.Tweet;
+import com.twitterapp.activity.ProfileActivity;
+import com.twitterapp.model.Tweet;
 
 public class TweetsAdapter extends ArrayAdapter<Tweet>{
 

@@ -1,4 +1,4 @@
-package com.twitterapp;
+package com.twitterapp.fragment;
 
 import java.util.ArrayList;
 
@@ -6,8 +6,10 @@ import org.json.JSONArray;
 
 import com.activeandroid.query.Select;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.twitterapp.fragments.BaseFragment;
-import com.twitterapp.models.Tweet;
+import com.twitterapp.R;
+import com.twitterapp.TwitterApp;
+import com.twitterapp.R.layout;
+import com.twitterapp.model.Tweet;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

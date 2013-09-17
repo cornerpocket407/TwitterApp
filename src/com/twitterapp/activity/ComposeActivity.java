@@ -1,4 +1,4 @@
-package com.twitterapp;
+package com.twitterapp.activity;
 
 import java.util.HashMap;
 
@@ -19,7 +19,11 @@ import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.twitterapp.models.User;
+import com.twitterapp.R;
+import com.twitterapp.TwitterApp;
+import com.twitterapp.R.id;
+import com.twitterapp.R.layout;
+import com.twitterapp.model.User;
 
 public class ComposeActivity extends FragmentActivity {
 

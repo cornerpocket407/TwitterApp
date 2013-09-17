@@ -1,37 +1,32 @@
-package com.twitterapp;
+package com.twitterapp.activity;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.query.Select;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.twitterapp.models.Tweet;
-import com.twitterapp.models.User;
+import com.twitterapp.R;
+import com.twitterapp.TwitterApp;
+import com.twitterapp.R.drawable;
+import com.twitterapp.R.id;
+import com.twitterapp.R.layout;
+import com.twitterapp.R.menu;
+import com.twitterapp.fragment.HomeTimelineFragment;
+import com.twitterapp.fragment.MentionsFragment;
+import com.twitterapp.model.User;
 
 public class TimelineActivity extends FragmentActivity implements TabListener {
 
@@ -69,14 +64,13 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 		actionBar.addTab(tabHome);
 		actionBar.addTab(tabMentions);
 		actionBar.selectTab(tabHome);
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-			// loadTweets();
+			getActionBar().getTabAt(0).select();
 		}
 	}
 

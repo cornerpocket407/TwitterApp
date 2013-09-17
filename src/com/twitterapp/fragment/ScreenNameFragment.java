@@ -1,4 +1,4 @@
-package com.twitterapp.fragments;
+package com.twitterapp.fragment;
 
 import org.json.JSONObject;
 
@@ -23,8 +23,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.twitterapp.R;
 import com.twitterapp.TwitterApp;
-import com.twitterapp.models.TwitterAppConsts;
-import com.twitterapp.models.User;
+import com.twitterapp.activity.ProfileActivity;
+import com.twitterapp.model.TwitterAppConsts;
+import com.twitterapp.model.User;
 
 public class ScreenNameFragment extends Fragment {
 
@@ -45,41 +46,55 @@ public class ScreenNameFragment extends Fragment {
 
 	private void populateFields() {
 		TextView tvName = (TextView) getActivity().findViewById(R.id.tvName);
-		String screenName = pref.getString("screenName", "");
-		tvName.setText(screenName);
+		tvName.setText(pref.getString("screenName", ""));
 		ImageView imageView = (ImageView) getActivity().findViewById(R.id.ivProfileImg);
-		String profileImage = pref.getString("profileImage","");
-		ImageLoader.getInstance().displayImage(profileImage, imageView);
+		ImageLoader.getInstance().displayImage(pref.getString("profileImage",""), imageView);
+		
+		TextView tvFollowers = (TextView) getActivity().findViewById(R.id.tvFollowers);
+		tvFollowers.setText(pref.getInt("followers", 0) + "Followers");
+		TextView tvFollowing = (TextView) getActivity().findViewById(R.id.tvFollowing);
+		tvFollowing.setText(pref.getInt("following", 0) + "Following");
+		
+		if(!(getActivity() instanceof ProfileActivity)) {
+			tvFollowers.setVisibility(View.GONE);
+			tvFollowing.setVisibility(View.GONE);
+		}
 	}
 	
 	private void fetchUser() {
 		pref =  getActivity().getSharedPreferences(TwitterAppConsts.SHARED_PREFERENCE_NAME, Activity.MODE_PRIVATE);
 		String screenName = pref.getString("screenName", "");
 		String profileImageUrl = pref.getString("profileImage", "");
-		if (screenName.isEmpty() || profileImageUrl.isEmpty()) {
+		int followers = pref.getInt("followers", -1);
+		int following = pref.getInt("following", -1);
+		if (screenName.isEmpty() || profileImageUrl.isEmpty() || followers < 0 || following < 0) {
 			if (isNetworkAvailable()) {
 				TwitterApp.getRestClient().getCurrentUser(new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(int arg0, JSONObject arg1) {
 						super.onSuccess(arg0, arg1);
 						User user = User.fromJson(arg1);
-						Editor editor = pref.edit();
-						editor.putString("screenName", user.getScreenName());
-						editor.putString("profileImage", user.getProfileImageUrl());
-						editor.commit();
+						saveToSharedPreferences(user);
 						populateFields();
 					}
 				});
 			} else {
 				User user = new Select().from(User.class).executeSingle();
-				Editor editor = pref.edit();
-				editor.putString("screenName", user.getScreenName());
-				editor.putString("profileImage", user.getProfileImageUrl());
+				saveToSharedPreferences(user);
 				populateFields();
 			}
 		} else {
 			populateFields();
 		}
+	}
+	
+	private void saveToSharedPreferences(User user) {
+		Editor editor = pref.edit();
+		editor.putString("screenName", user.getScreenName());
+		editor.putString("profileImage", user.getProfileImageUrl());
+		editor.putInt("followers", user.getFollowersCount());
+		editor.putInt("following", user.getFriendsCount());
+		editor.commit();
 	}
 	
 	private boolean isNetworkAvailable() {
