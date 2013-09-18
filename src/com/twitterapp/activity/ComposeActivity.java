@@ -58,25 +58,6 @@ public class ComposeActivity extends FragmentActivity {
 		transaction.commit();
 	}
 
-//	private void getUser() {
-//		TwitterApp.getRestClient().getCurrentUser(new JsonHttpResponseHandler() {
-//			@Override
-//			public void onSuccess(JSONObject arg1) {
-//				User user = User.fromJson(arg1);
-//				ScreenNameFragment screenNameFragment = 
-//						(ScreenNameFragment) getSupportFragmentManager().findFragmentById(R.id.ftScreenName);
-//				screenNameFragment.setUser(user);
-//			}
-//		});
-////		SharedPreferences pref =  PreferenceManager.getDefaultSharedPreferences(this);
-////		String screenName = pref.getString("screenName", "");
-////		String profileImageUrl = pref.getString("profileImage", "");
-////		tvUserName = (TextView) findViewById(R.id.tvUsername);
-////		tvUserName.setText(screenName);
-////		ImageView imageView = (ImageView) findViewById(R.id.ivComposeProfile);
-////		ImageLoader.getInstance().displayImage(profileImageUrl, imageView);
-//	}
-
 	public void onTweet(View view) {
 		String tweet = etTweet.getText().toString();
 		if (tweet.length() > 140) {

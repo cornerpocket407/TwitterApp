@@ -44,6 +44,10 @@ public abstract class BaseFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		loadTweets();
+	}
+
+	public void loadTweets() {
 		if (isNetworkAvailable()) {
 			loadFromApi();
 		} else {

@@ -73,13 +73,12 @@ public class TimelineActivity extends FragmentActivity implements TabListener {
 		actionBar.addTab(tabHome);
 		actionBar.addTab(tabMentions);
 		actionBar.selectTab(tabHome);
-
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-			homelineFragment.loadFromApi();
+			homelineFragment.loadTweets();
 		}
 	}
 

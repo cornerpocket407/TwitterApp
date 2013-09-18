@@ -2,14 +2,10 @@ package com.twitterapp.fragment;
 
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +13,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.activeandroid.Model;
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.twitterapp.R;
 import com.twitterapp.TwitterApp;
 import com.twitterapp.activity.ProfileActivity;
-import com.twitterapp.model.TwitterAppConsts;
 import com.twitterapp.model.User;
 
 public class ScreenNameFragment extends Fragment {
@@ -76,11 +71,28 @@ public class ScreenNameFragment extends Fragment {
 							super.onSuccess(arg0, arg1);
 							User user = User.fromJson(arg1);
 							populateFields(user);
+							saveUser(user);
 						}
 					});
 		} else {
-			User user = new Select().from(User.class).executeSingle();
+			User user = new Select().from(User.class).where("screenname = ? ", screenName).executeSingle();
 			populateFields(user);
+		}
+	}
+
+	protected void saveUser(User user) {
+		ActiveAndroid.beginTransaction();
+		try {
+			User dbUser = new Select().from(User.class)
+					.where("twitter_user_id = ?", user.getTwitterUserId())
+					.executeSingle();
+			if (dbUser == null) {
+				dbUser = user;
+				dbUser.save();
+			}
+			ActiveAndroid.setTransactionSuccessful();
+		} finally {
+			ActiveAndroid.endTransaction();
 		}
 	}
 

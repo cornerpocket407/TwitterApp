@@ -19,12 +19,6 @@ import android.view.ViewGroup;
 public class MentionsFragment extends BaseFragment {
 	protected ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragments_tweets_list, container,
-				false);
-	}
 
 	@Override
 	public void loadFromApi() {
@@ -37,15 +31,11 @@ public class MentionsFragment extends BaseFragment {
 						getAdapter().addAll(Tweet.fromJson(jsonTweets));
 					}
 				});
-		
 	}
 
 	@Override
 	public void loadFromDb() {
-		//TODO: Change this to pull mentions from db
 		tweets = new Select().from(Tweet.class).orderBy("id").limit("25")
 				.execute();
-		
 	}
-
 }

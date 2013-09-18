@@ -41,10 +41,11 @@ public class UserTimelineFragment extends BaseFragment {
 
 	@Override
 	public void loadFromDb() {
-		// TODO: CHANGE QUERY
-		tweets = new Select().from(Tweet.class).orderBy("id").limit("25")
+		User dbUser = new Select().from(User.class)
+				.where("screenname = ?", screenName)
+				.executeSingle();
+		tweets = new Select().from(Tweet.class).where("User = ?", dbUser.getId()).orderBy("id").limit("25")
 				.execute();
-
 	}
 
 }
